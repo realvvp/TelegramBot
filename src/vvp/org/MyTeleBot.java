@@ -141,36 +141,6 @@ public class MyTeleBot extends TelegramLongPollingBot {
         return result;
     }
 
-//    protected String getCurrencyRates(String currency) {
-//        String result = null;
-//
-//        if (currency != null) {
-//            currency += "_usd";
-//
-//            //JsonObject rates = performBasicRequest(BTCE_BASIC_URL.concat(currency));
-//            JsonObject rates = performBasicRequest(API_URL);
-//
-//            if (rates != null) {
-//                JsonObject ret = (JsonObject) rates.get(currency);
-//                if (ret != null) {
-//                    if (ret.get("buy") != null) {
-//                        result = "Курс " + currency.replace('_', '/').toUpperCase() + ":\n";
-//                        result += "Покупка: ";
-//                        result += ret.get("buy").getAsString();
-//                        result += "\n";
-//                    }
-//
-//                    if (ret.get("sell") != null) {
-//                        result += "Продажа: ";
-//                        result += ret.get("sell").getAsString();
-//                        result += "\n";
-//                    }
-//                }
-//            }
-//        }
-//        return result;
-//    }
-
     protected String getHelpString() {
         String result;
 

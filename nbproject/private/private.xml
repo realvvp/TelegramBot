@@ -5,6 +5,7 @@
         <group>
             <file>file:/home/vvp/crypto/TeleBot/TelegramBot/src/vvp/org/TickerInfo.java</file>
             <file>file:/home/vvp/crypto/TeleBot/TelegramBot/src/vvp/org/CurrencyUpdater.java</file>
+            <file>file:/home/vvp/crypto/TeleBot/TelegramBot/src/vvp/org/DBHandler.java</file>
             <file>file:/home/vvp/crypto/TeleBot/TelegramBot/src/vvp/org/MyTeleBot.java</file>
         </group>
     </open-files>

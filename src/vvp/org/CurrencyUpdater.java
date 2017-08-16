@@ -7,8 +7,12 @@ package vvp.org;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -36,6 +40,9 @@ public class CurrencyUpdater implements Runnable {
     @Override
     public void run() {
         initCurrencies();
+        
+        initFromDB();
+        
         JsonObject rates = null;
         while (true){
             
@@ -62,6 +69,40 @@ public class CurrencyUpdater implements Runnable {
                 Thread.currentThread().interrupt();
             }
         }
+    }
+    
+    protected void initFromDB(){
+        String sellQuery = "SELECT * FROM history WHERE OrderType = 'SELL' AND Currency ='";
+        String buyQuery = "SELECT * FROM history WHERE OrderType = 'BUY' AND Currency ='";
+
+        float bid, ask;
+        
+        for(String curr : currencies){
+            
+            bid = getPrice(sellQuery + curr + "' ORDER BY Id DESC");
+            ask = getPrice(buyQuery + curr + "' ORDER BY Id DESC");
+            
+            MyTeleBot.ratesValue.put( curr, new TickerInfo(bid, ask, ask) );
+            
+        }
+    }
+    
+    private float getPrice(String query){
+        float result = 0.f;
+        
+        ResultSet rs = DBHandler.getInstance().executeQuery(query);
+            
+        if(rs!=null){
+            try {
+                rs.next();
+                result = rs.getFloat("Price");
+
+            } catch (SQLException ex) {
+                Logger.getLogger(CurrencyUpdater.class.getName()).log(Level.SEVERE, null, ex);
+            }                
+        }
+        
+        return result;
     }
     
     protected JsonObject performBasicRequest(String currency) {
